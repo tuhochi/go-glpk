@@ -523,6 +523,33 @@ func (p *Prob) SetColStat(j int, stat VarStat) {
 	C.glp_set_col_stat(p.p.p, C.int(j), C.int(stat))
 }
 
+// The routine glp_std_basis constructs the “standard” (trivial)
+// initial LP basis for the specified problem object.
+func (p *Prob) StdBasis() {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	C.glp_std_basis(p.p.p)
+}
+
+// The routine glp_adv_basis constructs an advanced initial LP basis for the specified problem
+// The parameter flags is reserved for use in the future and must be specified as zero
+func (p *Prob) AdvdBasis(j int) {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	C.glp_adv_basis(p.p.p, C.int(j))
+}
+
+// The routine glp_cpx_basis constructs an initial basis for the specified problem object with the
+// algorithm proposed by R. Bixby
+func (p *Prob) CpxBasis() {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	C.glp_cpx_basis(p.p.p)
+}
+
 // glp_std_basis
 // glp_adv_basis
 // glp_cpx_basis
