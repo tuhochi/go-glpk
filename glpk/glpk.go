@@ -822,9 +822,23 @@ func (p *Prob) RowStat(i int) VarStat {
 	return VarStat(C.glp_get_row_stat(p.p.p, C.int(i)))
 }
 
-// TODO:
-// glp_get_row_prim
-// glp_get_row_dual
+// RowDual returns dual value (i.e. reduced cost) of the
+// auxiliary variable associated with i-th row.
+func (p *Prob) RowDual(i int) float64 {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	return float64(C.glp_get_row_dual(p.p.p, C.int(i)))
+}
+
+// RowPrim The routine glp_get_row_prim returns primal value
+// of the auxiliary variable associated with i-th row.
+func (p *Prob) RowPrim(i int) float64 {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	return float64(C.glp_get_row_prim(p.p.p, C.int(i)))
+}
 
 // ColStat returns the current status of j-th column structural
 // variable.
