@@ -482,6 +482,19 @@ func (p *Prob) MatCol(j int) (ind []int32, val []float64) {
 	return
 }
 
+// The routine glp_del_cols deletes columns from the specified problem object. Ordinal numbers
+// of columns to be deleted should be placed in locations num[1], . . . , num[ncs], where ncs > 0.
+func (p *Prob) DelCols(ncs int, num []int32) {
+	if p.p.p == nil {
+		panic("Prob method called on a deleted problem")
+	}
+	if ncs <= 0 {
+		panic("ncs <= 0")
+	}
+	num_ := (*reflect.SliceHeader)(unsafe.Pointer(&num))
+	C.glp_del_cols(p.p.p, C.int(ncs), (*C.int)(unsafe.Pointer(num_.Data)))
+}
+
 // TODO:
 // glp_create_index
 // glp_find_row
