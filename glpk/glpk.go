@@ -495,6 +495,15 @@ func (p *Prob) DelCols(ncs int, num []int32) {
 	C.glp_del_cols(p.p.p, C.int(ncs), (*C.int)(unsafe.Pointer(num_.Data)))
 }
 
+// Enables or disables the optional MIP presolver.
+func SetTermOut(on bool) {
+	if on {
+		C.glp_term_out(C.GLP_ON)
+	} else {
+		C.glp_term_out(C.GLP_OFF)
+	}
+}
+
 // TODO:
 // glp_create_index
 // glp_find_row
